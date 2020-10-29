@@ -1,6 +1,7 @@
 # Helloween
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.3.
+Icons from: https://www.freepik.com/blog/spooktacular-treat-from-flaticon/?__hstc=57440181.b376233e85c392c90ad0f7ca54ce4de4.1603190863419.1603190863419.1603190863419.1&__hssc=57440181.1.1603190863420&__hsfp=3993651421
 
 ## Development server
 

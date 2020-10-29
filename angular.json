@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "helloween"
+    }
+  },
+  "defaultProject": "helloween",
+  "cli": {
+    "analytics": "aada6634-def1-4fd5-9d7a-74b15d3b0a55"
+  }
 }
