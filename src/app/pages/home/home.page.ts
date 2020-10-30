@@ -1,0 +1,30 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss']
+})
+export class HomePage implements OnInit {
+
+  constructor(private router: Router) { }
+
+  ngOnInit(): void {
+  }
+
+  public startGame(niveau: string) {
+    switch (niveau) {
+      case 'easy':
+        this.router.navigate(['/game']);
+        break;
+      case 'middle':
+        this.router.navigate(['/game']);
+        break;
+      case 'difficult':
+        this.router.navigate(['/game']);
+        break;
+    }
+  }
+
+}
