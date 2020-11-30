@@ -1,6 +1,7 @@
 import { GameService } from './../../services/game.service';
 import { Icon } from './../../models/card';
 import { Component, Input, OnInit } from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-card',
@@ -8,31 +9,23 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent implements OnInit {
-  @Input() icon: Icon; 
-  public clicked: boolean;
+  @Input() icon: Icon;
 
-  constructor(private gameService: GameService) { }
+  constructor(private gameService: GameService,
+              private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.clicked = false;
   }
 
   public cardClicked(){
-    this.clicked = !this.clicked;
-    if(this.clicked){ // card back was clicked
-      console.log(this.icon);
-      this.gameService.assign(this.icon); // hold the icons
-
-      if(this.gameService.allAssigned()){ // two icons hold
-
-        if(this.gameService.areSame()){ // icons are same
-
-        }else{ // icons are not same
-          console.log('not same');
-        }
-
-      }
-
+    console.log(this.icon);
+    if(!this.gameService.twoIconsClicked() && !this.icon.clicked){
+      this.icon.clicked = true;
+      this.gameService.onIconClicked(this.icon); // hold the icons
+    }else{
+      this._snackBar.open('Open only 2 cards at a time!', 'Ok', {
+        duration: 2000,
+      });
     }
   }
 

@@ -1,3 +1,4 @@
 <mat-card (click)="cardClicked()">
-    <img *ngIf="clicked" src="{{icon.url}}" alt="Helloween icon">
+    <img *ngIf="icon.clicked" src="{{icon.url}}" alt="Helloween icon">
+    <img *ngIf="!icon.clicked" src="../../../assets/lineal-color/1-jack o lantern.svg" alt="Back" class="back">
 </mat-card>

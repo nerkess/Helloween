@@ -1,4 +1,4 @@
-import { Icon, ICONS } from './../../models/card';
+import { GameService } from './../../services/game.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,20 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game.page.scss']
 })
 export class GamePage implements OnInit {
-  public icons: Array<Icon>;
-  public randomIcons: Array<Icon> = [];
 
-  constructor() { }
+  constructor(public gameService: GameService) { }
 
   ngOnInit(): void {
-    this.icons = ICONS;
-    this.randomIcons = this.icons.slice(0, 10);
-    this.randomIcons = this.randomIcons.concat(this.randomIcons);
-    this.shuffleArray();
-  }
 
-  private shuffleArray(){
-    this.randomIcons.sort(() => Math.random() - 0.5);
   }
 
 }
