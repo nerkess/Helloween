@@ -1,7 +1,11 @@
 <mat-toolbar color="primary">
-  <span>Score: {{gameService.score}}</span>
+  <span>Score: {{score$ | async}}</span>
+  <span class="spacer"></span>
+  <button mat-raised-button color="accent" (click)="newGame()">New game</button>
 </mat-toolbar>
-
-<div class="cards">
-    <app-card *ngFor="let i of gameService.randomIcons" [icon]="i"></app-card>
+<div class="game-page">
+  <div class="cards" [ngStyle]="{gridTemplateColumns: getStyle()}">
+    <app-card *ngFor="let i of gameArray$ | async" [icon]="i"></app-card>
+  </div>
 </div>
+

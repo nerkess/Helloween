@@ -1,3 +1,5 @@
+import { AddScore } from './../state/game.actions';
+import { Store } from '@ngxs/store';
 import { Icon, ICONS } from './../models/card';
 import { Injectable } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -6,19 +8,23 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   providedIn: 'root'
 })
 export class GameService {
-  public randomIcons: Array<Icon> = [];
-  public score: number = 0;
+  public randomIcons: Icon[] = [];
+  //public score: number = 0;
   public firstClickedIcon: Icon;
   public secondClickedIcon: Icon;
 
-  constructor(private _snackBar: MatSnackBar) {
-    this.randomIcons = ICONS.slice(0, 10);
+  constructor(private _snackBar: MatSnackBar,
+    private store: Store) {}
+
+  fillArray(count: number): Icon[]{
+    this.randomIcons = ICONS.slice(0, count);
     this.randomIcons = this.randomIcons.concat(this.randomIcons).map(icon => ({
       id: icon.id,
       url: icon.url,
       clicked: icon.clicked
     }));
     this.shuffleArray();
+    return this.randomIcons;
   }
 
   public onIconClicked(icon: Icon){
@@ -30,14 +36,15 @@ export class GameService {
       setTimeout(() => {
         if(this.areSame()){
           this.snackbarOpen('You did it!!!', 'YAAAS!');
-          this.score += 20;
+          //this.score += 20;
+          this.store.dispatch(new AddScore());
         }else{
-          this.snackbarOpen('Your memory is really weak :P', 'I know!');
+          // this.snackbarOpen('Your memory is really weak :P', 'I know!');
           this.firstClickedIcon.clicked = false;
           this.secondClickedIcon.clicked = false;
         }
         this.makeNull();
-      }, 2000);
+      }, 500);
     }
   }
 

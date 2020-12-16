@@ -51,7 +51,7 @@ const ICON_NAMES = [
     'crystal ball'
 ];
 
-export const ICONS: Array<Icon> = ICON_NAMES.map((name, index) => ({
+export const ICONS: Icon[] = ICON_NAMES.map((name, index) => ({
     id: ++index,
     url: '../../../assets/lineal-color/' + index + '-' + name + '.svg',
     clicked: false

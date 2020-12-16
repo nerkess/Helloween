@@ -1,0 +1,22 @@
+.buttons{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  button {
+    font-size: xx-large;
+    padding: 2rem;
+  }
+}
+
+@media only screen and (max-width: 600px){
+  .buttons{
+    flex-direction: column;
+
+    button{
+      width: 60%;
+    }
+  }
+}

@@ -36,8 +36,12 @@ $helloween-theme: mat-light-theme((
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { 
-  margin: 0; 
+body {
+  margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #554E55; 
+  background-color: #554E55;
+}
+
+*{
+  font-family: 'Langar', cursive;
 }

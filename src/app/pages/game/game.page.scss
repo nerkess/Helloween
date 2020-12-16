@@ -1,7 +1,16 @@
+.game-page{
+  display: flex;
+  height: calc(100% - 80px);
+  justify-content: center;
+  align-items: center;
+}
+
+.spacer{
+  flex: 1 1 auto;
+}
+
 .cards{
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
     grid-gap: 1rem;
-    width: 60%;
-    margin: 1rem auto;
+    align-content: center;
 }

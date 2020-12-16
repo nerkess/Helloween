@@ -13,18 +13,8 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
   }
 
-  public startGame(niveau: string) {
-    switch (niveau) {
-      case 'easy':
-        this.router.navigate(['/game']);
-        break;
-      case 'middle':
-        this.router.navigate(['/game']);
-        break;
-      case 'difficult':
-        this.router.navigate(['/game']);
-        break;
-    }
+  public startGame(difficulty: string) {
+        this.router.navigate(['/game/' + difficulty]);
   }
 
 }

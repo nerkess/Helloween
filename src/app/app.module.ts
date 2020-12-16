@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-
+import { NgxsModule } from '@ngxs/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CardComponent } from './components/card/card.component';
@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { HomePage } from './pages/home/home.page';
 import { GamePage } from './pages/game/game.page';
+import { GameState } from './state/game.state';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { GamePage } from './pages/game/game.page';
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    NgxsModule.forRoot([GameState])
   ],
   providers: [GameService],
   bootstrap: [AppComponent]
