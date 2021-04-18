@@ -1,6 +1,6 @@
 export class FillCardsArray{
   static readonly type = '[Game] Fill Cards Array';
-  constructor(public count: number){}
+  constructor(public difficulty: string){}
 }
 
 export class GameOver{

@@ -1,20 +1,47 @@
-import { AddScore } from './../state/game.actions';
-import { Store } from '@ngxs/store';
+import { Observable, Subscription } from 'rxjs';
+import { GameState } from './../state/game.state';
+import { AddScore, GameOver } from './../state/game.actions';
+import { Select, Store } from '@ngxs/store';
 import { Icon, ICONS } from './../models/card';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GameService {
+export class GameService implements OnDestroy {
   public randomIcons: Icon[] = [];
   //public score: number = 0;
   public firstClickedIcon: Icon;
   public secondClickedIcon: Icon;
+  private targetScore: number;
+  private subs: Subscription[];
 
-  constructor(private _snackBar: MatSnackBar,
-    private store: Store) {}
+  @Select(GameState.getScore) score$: Observable<number>;
+  @Select(GameState.getTargetScore) targetScore$: Observable<number>;
+
+  constructor(private _snackBar: MatSnackBar, private store: Store) {
+    this.subs = [];
+
+    this.subs.push(this.targetScore$.subscribe(targetScore => {
+      this.targetScore = targetScore;
+    }));
+
+    this.subs.push(this.score$.subscribe(score => {
+        if(score === this.targetScore && this.targetScore > 0) {
+          this.snackbarOpen('YOU WOOOOON!!!', 'YAAAS!');
+          setTimeout(() => {
+            this.store.dispatch(new GameOver());
+          }, 3000);
+        }
+    }));
+  }
+
+  ngOnDestroy() {
+    for(const sub of this.subs){
+      sub.unsubscribe();
+    }
+  }
 
   fillArray(count: number): Icon[]{
     this.randomIcons = ICONS.slice(0, count);
@@ -28,14 +55,13 @@ export class GameService {
   }
 
   public onIconClicked(icon: Icon){
-    console.log(this.randomIcons);
     if(this.firstClickedIcon == null){
       this.firstClickedIcon = icon;
     }else if(this.secondClickedIcon == null) {
       this.secondClickedIcon = icon;
       setTimeout(() => {
         if(this.areSame()){
-          this.snackbarOpen('You did it!!!', 'YAAAS!');
+          this.snackbarOpen('Cool!', 'Thanks ᕙ(`▿´)ᕗ');
           //this.score += 20;
           this.store.dispatch(new AddScore());
         }else{

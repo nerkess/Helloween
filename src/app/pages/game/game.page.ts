@@ -1,4 +1,4 @@
-import { GameModel } from './../../state/game.state';
+import { GameModel } from './../../models/game';
 import { GameService } from './../../services/game.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,20 +24,9 @@ export class GamePage implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.store.dispatch(new FillCardsArray(this.getDifficulty()));
+    this.store.dispatch(new FillCardsArray(this.route.snapshot.params['difficulty']));
     this.gameArray$ = this.store.select(state => state.game.gameArray);
     this.score$ = this.store.select(state => state.game.score);
-  }
-
-  getDifficulty(): number{
-    switch(this.route.snapshot.params['difficulty']){
-      case 'easy':
-        return 4;
-      case 'middle':
-        return 6;
-      case 'difficult':
-        return 10;
-    }
   }
 
   getStyle(){
@@ -54,5 +43,4 @@ export class GamePage implements OnInit {
   newGame(){
     this.location.back();
   }
-
 }

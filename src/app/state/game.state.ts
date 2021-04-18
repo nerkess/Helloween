@@ -1,20 +1,15 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GameService } from './../services/game.service';
-import { FillCardsArray, AddScore } from './game.actions';
+import { FillCardsArray, AddScore, GameOver } from './game.actions';
 import { Icon, ICONS } from './../models/card';
+import { GameModel } from './../models/game';
 import { Injectable } from '@angular/core';
 import { Action, Select, Selector, State, StateContext } from '@ngxs/store';
-
-export interface GameModel{
-  score: number,
-  firstClickedCard: Icon,
-  secondClickedCard: Icon,
-  gameArray: Icon[],
-}
 
 @State<GameModel>({
   name: 'game',
   defaults: {
+    targetScore: 0,
     score: 0,
     firstClickedCard: undefined,
     secondClickedCard: undefined,
@@ -24,7 +19,7 @@ export interface GameModel{
 
 @Injectable()
 export class GameState {
-  constructor(private gameService: GameService, private _snackBar: MatSnackBar){}
+  constructor(private _snackBar: MatSnackBar){}
 
   @Selector()
   static getGameArray(state: GameModel){
@@ -36,12 +31,18 @@ export class GameState {
     return state.score
   }
 
+  @Selector()
+  static getTargetScore(state: GameModel){
+    return state.targetScore
+  }
+
   @Action(FillCardsArray)
-  fillCardsArray(ctx: StateContext<GameModel>, { count }: FillCardsArray){
+  fillCardsArray(ctx: StateContext<GameModel>, { difficulty }: FillCardsArray){
     const state = ctx.getState();
     ctx.setState({
       ...state,
-      gameArray: this.fillArray(count)
+      targetScore: 20 * this.getDifficulty(difficulty),
+      gameArray: this.fillArray(difficulty)
     });
   }
 
@@ -54,8 +55,17 @@ export class GameState {
     });
   }
 
-  private fillArray(count: number): Icon[]{
-    let randomIcons = ICONS.slice(0, count);
+  @Action(GameOver)
+  gameOver(ctx: StateContext<GameModel>){
+    const state = ctx.getState();
+    ctx.setState({
+      ...state,
+      score: 0
+    });
+  }
+
+  private fillArray(difficulty: string): Icon[]{
+    let randomIcons = ICONS.slice(0, this.getDifficulty(difficulty));
     randomIcons = randomIcons.concat(randomIcons).map(icon => ({
       id: icon.id,
       url: icon.url,
@@ -63,6 +73,18 @@ export class GameState {
     }));
     this.shuffleArray(randomIcons);
     return randomIcons;
+  }
+
+
+  private getDifficulty(difficulty: string): number{
+    switch(difficulty){
+      case 'easy':
+        return 4;
+      case 'middle':
+        return 6;
+      case 'difficult':
+        return 10;
+    }
   }
 
   private shuffleArray(randomIcons){

@@ -57,7 +57,7 @@ export const ICONS: Icon[] = ICON_NAMES.map((name, index) => ({
     clicked: false
 }));
 
-export class Icon {
+export interface Icon {
     id: number;
     url: string;
     clicked: boolean;

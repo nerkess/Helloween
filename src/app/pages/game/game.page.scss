@@ -1,16 +1,29 @@
+mat-toolbar {
+  background-color: #c70039;
+
+  span:first-child {
+    color: white;
+  }
+
+  .spacer{
+    flex: 1 1 auto;
+  }
+
+  button {
+    background-color: #f37121;
+  }
+}
+
 .game-page{
   display: flex;
   height: calc(100% - 80px);
   justify-content: center;
   align-items: center;
+
+  .cards{
+      display: grid;
+      grid-gap: 1rem;
+      align-content: center;
+  }
 }
 
-.spacer{
-  flex: 1 1 auto;
-}
-
-.cards{
-    display: grid;
-    grid-gap: 1rem;
-    align-content: center;
-}

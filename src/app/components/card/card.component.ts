@@ -18,7 +18,6 @@ export class CardComponent implements OnInit {
   }
 
   public cardClicked(){
-    console.log(this.icon);
     if(!this.gameService.twoIconsClicked() && !this.icon.clicked){
       this.icon.clicked = true;
       this.gameService.onIconClicked(this.icon); // hold the icons
