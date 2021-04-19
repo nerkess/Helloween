@@ -53,7 +53,7 @@ const ICON_NAMES = [
 
 export const ICONS: Icon[] = ICON_NAMES.map((name, index) => ({
     id: ++index,
-    url: '../../../assets/lineal-color/' + index + '-' + name + '.svg',
+    url: './assets/lineal-color/' + index + '-' + name + '.svg',
     clicked: false
 }));
 
