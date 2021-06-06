@@ -1,18 +1,15 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { GameService } from './../services/game.service';
-import { FillCardsArray, AddScore, GameOver } from './game.actions';
+import { FillCards, AddScore, GameOver } from './game.actions';
 import { Icon, ICONS } from './../models/card';
 import { GameModel } from './../models/game';
 import { Injectable } from '@angular/core';
-import { Action, Select, Selector, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 
 @State<GameModel>({
   name: 'game',
   defaults: {
     targetScore: 0,
     score: 0,
-    firstClickedCard: undefined,
-    secondClickedCard: undefined,
     gameArray: []
   }
 })
@@ -23,21 +20,21 @@ export class GameState {
 
   @Selector()
   static getGameArray(state: GameModel){
-    return state.gameArray
+    return state.gameArray;
   }
 
   @Selector()
   static getScore(state: GameModel){
-    return state.score
+    return state.score;
   }
 
   @Selector()
   static getTargetScore(state: GameModel){
-    return state.targetScore
+    return state.targetScore;
   }
 
-  @Action(FillCardsArray)
-  fillCardsArray(ctx: StateContext<GameModel>, { difficulty }: FillCardsArray){
+  @Action(FillCards)
+  fillCardsArray(ctx: StateContext<GameModel>, { difficulty }: FillCards){
     const state = ctx.getState();
     ctx.setState({
       ...state,
@@ -65,16 +62,27 @@ export class GameState {
   }
 
   private fillArray(difficulty: string): Icon[]{
-    let randomIcons = ICONS.slice(0, this.getDifficulty(difficulty));
-    randomIcons = randomIcons.concat(randomIcons).map(icon => ({
-      id: icon.id,
-      url: icon.url,
-      clicked: icon.clicked
-    }));
+    let randomIcons = [];
+    for(let i = 0; i < this.getDifficulty(difficulty); ++i) {
+      let tempIcon;
+      do{
+        tempIcon = ICONS[Math.floor(Math.random() * ICONS.length)];
+      }while(randomIcons.includes(tempIcon));
+      randomIcons.push({ // clone, not copy, because of the reference
+        id: tempIcon.id,
+        url: tempIcon.url,
+        clicked: tempIcon.clicked
+      });
+      randomIcons.push({ // clone, not copy, because of the reference
+        id: tempIcon.id,
+        url: tempIcon.url,
+        clicked: tempIcon.clicked
+      });
+    }
     this.shuffleArray(randomIcons);
+    console.warn(randomIcons)
     return randomIcons;
   }
-
 
   private getDifficulty(difficulty: string): number{
     switch(difficulty){
@@ -89,11 +97,5 @@ export class GameState {
 
   private shuffleArray(randomIcons){
     randomIcons.sort(() => Math.random() - 0.5);
-  }
-
-  private snackbarOpen(message1: string, message2: string){
-    this._snackBar.open(message1, message2, {
-      duration: 2000,
-    });
   }
 }

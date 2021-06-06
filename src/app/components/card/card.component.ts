@@ -1,7 +1,7 @@
 import { GameService } from './../../services/game.service';
 import { Icon } from './../../models/card';
 import { Component, Input, OnInit } from '@angular/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-card',
@@ -27,5 +27,4 @@ export class CardComponent implements OnInit {
       });
     }
   }
-
 }

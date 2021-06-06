@@ -2,7 +2,7 @@ import { Observable, Subscription } from 'rxjs';
 import { GameState } from './../state/game.state';
 import { AddScore, GameOver } from './../state/game.actions';
 import { Select, Store } from '@ngxs/store';
-import { Icon, ICONS } from './../models/card';
+import { Icon } from './../models/card';
 import { Injectable, OnDestroy } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
@@ -11,7 +11,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class GameService implements OnDestroy {
   public randomIcons: Icon[] = [];
-  //public score: number = 0;
   public firstClickedIcon: Icon;
   public secondClickedIcon: Icon;
   private targetScore: number;
@@ -43,17 +42,6 @@ export class GameService implements OnDestroy {
     }
   }
 
-  fillArray(count: number): Icon[]{
-    this.randomIcons = ICONS.slice(0, count);
-    this.randomIcons = this.randomIcons.concat(this.randomIcons).map(icon => ({
-      id: icon.id,
-      url: icon.url,
-      clicked: icon.clicked
-    }));
-    this.shuffleArray();
-    return this.randomIcons;
-  }
-
   public onIconClicked(icon: Icon){
     if(this.firstClickedIcon == null){
       this.firstClickedIcon = icon;
@@ -62,7 +50,6 @@ export class GameService implements OnDestroy {
       setTimeout(() => {
         if(this.areSame()){
           this.snackbarOpen('Cool!', 'Thanks ᕙ(`▿´)ᕗ');
-          //this.score += 20;
           this.store.dispatch(new AddScore());
         }else{
           // this.snackbarOpen('Your memory is really weak :P', 'I know!');
@@ -85,10 +72,6 @@ export class GameService implements OnDestroy {
 
   public areSame(): boolean {
     return (this.firstClickedIcon.id === this.secondClickedIcon.id) ? true : false;
-  }
-
-  private shuffleArray(){
-    this.randomIcons.sort(() => Math.random() - 0.5);
   }
 
   private snackbarOpen(message1: string, message2: string){

@@ -3,7 +3,7 @@ import { GameService } from './../../services/game.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { FillCardsArray } from 'src/app/state/game.actions';
+import { FillCards } from 'src/app/state/game.actions';
 import { Icon } from 'src/app/models/card';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
@@ -24,7 +24,7 @@ export class GamePage implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.store.dispatch(new FillCardsArray(this.route.snapshot.params['difficulty']));
+    this.store.dispatch(new FillCards(this.route.snapshot.params['difficulty']));
     this.gameArray$ = this.store.select(state => state.game.gameArray);
     this.score$ = this.store.select(state => state.game.score);
   }
