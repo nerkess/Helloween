@@ -8,9 +8,23 @@ mat-card{
     }
 }
 
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 768px) and (min-width: 691px){
   mat-card{
     width: 100px;
     height: 100px;
+  }
+}
+
+@media only screen and (max-width: 690px) and (min-width: 411px){
+  mat-card{
+    width: 65px;
+    height: 65px;
+  }
+}
+
+@media only screen and (max-width: 410px){
+  mat-card{
+    width: 30px;
+    height: 30px;
   }
 }

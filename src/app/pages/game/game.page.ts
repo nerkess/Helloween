@@ -32,11 +32,20 @@ export class GamePage implements OnInit {
   getStyle(){
     switch(this.route.snapshot.params['difficulty']){
       case 'easy':
-        return 'repeat(4, 1fr)';
       case 'middle':
         return 'repeat(4, 1fr)';
       case 'difficult':
         return 'repeat(5, 1fr)';
+    }
+  }
+
+  getCols(){
+    switch(this.route.snapshot.params['difficulty']){
+      case 'easy':
+      case 'middle':
+        return 4;
+      case 'difficult':
+        return 5;
     }
   }
 

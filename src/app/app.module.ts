@@ -1,8 +1,8 @@
 import { GameService } from './services/game.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxsModule } from '@ngxs/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +14,7 @@ import { HomePage } from './pages/home/home.page';
 import { GamePage } from './pages/game/game.page';
 import { GameState } from './state/game.state';
 import { GameOverDialogComponent } from './components/game-over-dialog/game-over-dialog.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { GameOverDialogComponent } from './components/game-over-dialog/game-over
     MatButtonModule,
     MatToolbarModule,
     MatSnackBarModule,
+    MatGridListModule,
     NgxsModule.forRoot([GameState])
   ],
   providers: [GameService],

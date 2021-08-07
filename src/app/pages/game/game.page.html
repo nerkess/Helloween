@@ -4,8 +4,13 @@
   <button mat-raised-button color="accent" (click)="newGame()">New game</button>
 </mat-toolbar>
 <div class="game-page">
-  <div class="cards" [ngStyle]="{gridTemplateColumns: getStyle()}">
+ <div class="cards" [ngStyle]="{gridTemplateColumns: getStyle()}">
     <app-card *ngFor="let i of gameArray$ | async" [icon]="i"></app-card>
   </div>
+   <!--<mat-grid-list [cols]="getCols()" rowHeight="1:1">
+    <mat-grid-tile *ngFor="let i of gameArray$ | async" [icon]="i">
+      <app-card [icon]="i"></app-card>
+    </mat-grid-tile>
+  </mat-grid-list>-->
 </div>
 
