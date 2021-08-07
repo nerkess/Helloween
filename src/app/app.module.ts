@@ -13,13 +13,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { HomePage } from './pages/home/home.page';
 import { GamePage } from './pages/game/game.page';
 import { GameState } from './state/game.state';
+import { GameOverDialogComponent } from './components/game-over-dialog/game-over-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CardComponent,
     HomePage,
-    GamePage
+    GamePage,
+    GameOverDialogComponent
   ],
   imports: [
     BrowserModule,
